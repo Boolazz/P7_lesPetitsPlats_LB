@@ -1,0 +1,21 @@
+.search {
+    position: relative;
+    margin: 0 auto;
+    width: 86%;
+    &__input {
+        box-sizing: border-box;
+        width: 100%;
+        background-color: #E7E7E7;
+        font-family: lato;
+        font-size: 18px;
+        border-style: none;
+        border-radius: 5px;
+        padding: 24px;
+    }
+    &__icon {
+        position: absolute;
+        right: 20px;
+        top: 18px;
+    }
+}
+
