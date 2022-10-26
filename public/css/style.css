@@ -93,6 +93,7 @@ li {
 }
 .filters__active--content {
   display: flex;
+  align-items: center;
 }
 .filters__active--text {
   margin: 0 auto;
@@ -119,6 +120,7 @@ li {
 }
 .filters__dropdown--content {
   display: flex;
+  align-items: center;
 }
 .filters__dropdown--text {
   margin: 0 auto;
@@ -172,12 +174,14 @@ li {
   text-align: right;
   padding: 0px;
   display: flex;
+  align-items: center;
 }
 .result__card__text--time--icon {
   margin-right: 5px;
 }
 .result__card__text--time--text {
   margin: 0 auto;
+  margin-left: 5px;
   font-size: 18px;
   font-weight: 700;
 }

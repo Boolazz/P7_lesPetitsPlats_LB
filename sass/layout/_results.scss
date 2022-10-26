@@ -30,11 +30,13 @@
                 text-align: right;
                 padding: 0px;
                 display: flex;
+                align-items: center;
                 &--icon {
                     margin-right: 5px;
                 }
                 &--text {
                     margin: 0 auto;
+                    margin-left: 5px;
                     font-size: 18px;
                     font-weight: 700;
                 }
