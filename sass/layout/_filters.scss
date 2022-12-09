@@ -1,10 +1,10 @@
 .filters {
     margin: 0 auto;
-    margin-top: 25px;
     width: 86%;
     &__active {
         display: block;
         margin: 0 auto;
+        margin-top: 15px;
         &--box {
             display: inline-block;
             margin: 0 auto;
@@ -17,6 +17,8 @@
             padding: 10px 20px 10px 20px;
             text-align: left;
             align-items: center;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
         &--content{
             display: flex;
@@ -31,6 +33,7 @@
         display: block;
         margin: 0 auto;
         margin-top: 15px;
+        position: absolute;
         &--box {
             display: inline-block;
             margin: 0 auto;
@@ -47,11 +50,70 @@
         }
         &--content {
             display: flex;
+            flex-direction: column;
             align-items: center;
+        }
+        &--close {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
         }
         &--text {
             margin: 0 auto;
             margin-right: 30px;
+        }
+        &--search {
+            width: 90%;
+            height: 39px;
+            color: #FFF;
+            border: 0px solid;
+            background-color: transparent;
+            margin-bottom: 25px;
+            display: none;
+        }
+        &--search::placeholder {
+            color: #fff;
+        }
+        &--listblue {
+            overflow-x: scroll;
+            column-count: 4;
+            font-weight: 400;
+            &--ingredients {
+                margin-bottom: 8px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        &--listgreen {
+            margin-top: 8px;
+            overflow-x: scroll;
+            column-count: 1;
+            font-weight: 400;
+            &--appliances {
+                margin-bottom: 8px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        &--listred {
+            margin-top: 8px;
+            overflow-x: scroll;
+            column-count: 2;
+            font-weight: 400;
+            &--ustensils {
+                margin-bottom: 8px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+        &--icon--open{
+            rotate: 180deg;
+            align-items: right;
         }
     }
 }

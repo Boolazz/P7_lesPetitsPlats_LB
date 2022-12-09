@@ -28,31 +28,41 @@
             </svg>
         </div>
         <div class="filters container">
-            <div class="filters__active">
-                <div class="filters__active--box blue">
+            <div class="filters__active" style="display: none">
+                <!-- <div class="filters__active--box blue">
                     <div class="filters__active--content">
                         <p class="filters__active--text">Coco</p>
                         <i class="fa-regular fa-circle-xmark"></i>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="filters__dropdown">
-                <div class="filters__dropdown--box blue">
+                <div class="filters__dropdown--box blue ingredients">
                     <div class="filters__dropdown--content">
-                        <p class="filters__dropdown--text">Ingrédients</p>
-                        <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon"></i>
+                        <div class="filters__dropdown--close">
+                            <p class="filters__dropdown--text blue">Ingrédients</p>
+                            <input class="filters__dropdown--search bluesearch" type="text" placeholder="Rechercher un ingredient" onchange="researchList('listblue')">
+                            <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon blue"></i>
+                        </div>
+                        <div class="filters__dropdown--listblue"></div>
                     </div>
                 </div>
-                <div class="filters__dropdown--box green">
+                <div class="filters__dropdown--box green utensils">
                     <div class="filters__dropdown--content">
-                        <p class="filters__dropdown--text">Appareils</p>
-                        <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon"></i>
+                        <div class="filters__dropdown--close">
+                            <p class="filters__dropdown--text green">Appareils</p>
+                            <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon green"></i>
+                        </div>
+                        <div class="filters__dropdown--listgreen"></div>
                     </div>
                 </div>
-                <div class="filters__dropdown--box red">
+                <div class="filters__dropdown--box red appliances">
                     <div class="filters__dropdown--content">
-                        <p class="filters__dropdown--text">Ustensiles</p>
-                        <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon"></i>
+                        <div class="filters__dropdown--close">
+                            <p class="filters__dropdown--text red">Ustensiles</p>
+                            <i class="fa-sharp fa-solid fa-chevron-down filters__dropdown--icon red"></i>
+                        </div>
+                        <div class="filters__dropdown--listred"></div>
                     </div>
                 </div>
             </div>
@@ -60,30 +70,9 @@
     </header>
     <div class="container">
         <div class="result">
-            <div class="result__card">
-                <div class="result__card--img"></div>
-                <div class="result__card__info">
-                    <div class="result__card__text">
-                        <h2 class="result__card__text--title">Limonade de coco</h2>
-                        <div class="result__card__text--time">
-                            <i class="fa-regular fa-clock"></i>
-                            <p class="result__card__text--time--text">10 min</p>
-                        </div>
-                    </div>
-                    <div class="result__card__text--details">
-                        <ul class="result__card__text--details--ingredients">
-                            <li><strong>Lait de coco:</strong> 400ml</li>
-                            <li><strong>Jus de citron:</strong> 2</li>
-                            <li><strong>Crème de coco:</strong> 4 cuillères</li>
-                            <li><strong>Sucre:</strong> 20g</li>
-                            <li><strong>Glaçons:</strong> 400ml</li>
-                        </ul>
-                        <p class="result__card__text--details--description">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    <script src="/public/data/recipes.js"></script>
     <script src="/public/script/Main.js"></script>
 </body>
 </html>
