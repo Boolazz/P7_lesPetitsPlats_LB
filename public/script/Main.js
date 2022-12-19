@@ -361,7 +361,6 @@ ingredientsLi.forEach(element => {
     element.addEventListener("click", function(event) {
 
         // Réinitialisation des filtres au clic
-
         document.querySelector('.filters__active').innerHTML = ''
 
         if (!activeFilters.ingredients.includes(event.target.textContent))
@@ -380,7 +379,6 @@ appliancesLi.forEach(element => {
     element.addEventListener("click", function(event) {
         
         // Réinitialisation des filtres au clic
-
         document.querySelector('.filters__active').innerHTML = ''
 
         if (!activeFilters.appliances.includes(event.target.textContent))
@@ -398,8 +396,8 @@ ustensilsLi.forEach(element => {
 
     element.addEventListener("click", function(event) {
         console.log('wesh');
-        // Réinitialisation des filtres au clic
 
+        // Réinitialisation des filtres au clic
         document.querySelector('.filters__active').innerHTML = ''
 
         if (!activeFilters.ustensils.includes(event.target.textContent))
@@ -412,7 +410,6 @@ ustensilsLi.forEach(element => {
         research ();
     })
 })
-
 
 //Recherche des menus et réinitialisation des résultats
 
@@ -444,10 +441,26 @@ function research() {
 
 // Recherche au clavier dans une liste
 
-document.querySelector('.bluesearch').addEventListener('keydown', researchList('listblue'))
+document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
+document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
+document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
 
-function researchList(classe) {
-    console.log(this);
-    let filtersList = document.querySelector('.filters__dropdown--'+ classe)
+function researchListBlue(e) {
 
-    }
+    let filtersList = document.querySelectorAll('.filters__dropdown--listblue--ingredients')
+    let rechercheIng = e.target.value
+
+    filtersList.forEach(tri => {
+
+        if (tri.innerHTML.toLowerCase().includes(rechercheIng.toLowerCase()) || rechercheIng == '') {
+            tri.style.display = 'block'
+        } else {
+            tri.style.display = 'none'
+        }
+    })
+}
+
+
+    // au click sur un tag, cacher les éléments qui ne son plus concernés
+
+    //formater json + 3xrecherche + mettre de côté les ingredients des recettes affichées ('1 fois chaq) + input dans chaques dropdown
