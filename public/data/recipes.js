@@ -283,7 +283,7 @@ const recipes = [
                "unit": "grammes"
            },
            {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 90,
                 "unit": "grammes"
            }
@@ -312,7 +312,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Vinaigre Balsamic"
+                "ingredient": "Vinaigre balsamic"
             },
             {
                 "ingredient": "Huile d'olive"
@@ -376,7 +376,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Jambon de parme",
+                "ingredient": "Jambon de Parme",
                 "quantity": 4,
                 "unit": "tranches"
             }, 
@@ -1031,7 +1031,7 @@ const recipes = [
         "servings": 4,
         "ingredients": [
             {
-                "ingredient": "Pois Cassé",
+                "ingredient": "Pois cassés",
                 "quantity": 500,
                 "unit": "grammes"
             },
@@ -1136,7 +1136,7 @@ const recipes = [
                 "unit": "tranches"
             },
             {
-                "ingredient": "Saumon Fumé",
+                "ingredient": "Saumon fumé",
                 "quantity": 4,
                 "unit": "tranches"
             },
@@ -1377,7 +1377,7 @@ const recipes = [
                 "unit": "Litres"
             },
             {
-                "ingredient": "Citron Vert",
+                "ingredient": "Citron vert",
                 "quantity": 3
             },
             {

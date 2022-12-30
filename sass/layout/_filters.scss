@@ -51,7 +51,7 @@
         &--content {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            //align-items: center;
         }
         &--close {
             width: 100%;
@@ -72,6 +72,9 @@
             background-color: transparent;
             margin-bottom: 25px;
             display: none;
+            &.greensearch {
+                width: 180px;
+            }
         }
         &--search::placeholder {
             color: #fff;

@@ -1,4 +1,4 @@
-//////////// DÉCLARATION DES TABLEAUX FILTRES DROPDOWN
+//////////// DÉCLARATION DES TABLEAUX FILTRES DROPDOWN ////////////
 
 var ingredientsArray = [];
 var ustensilsArray = [];
@@ -8,18 +8,16 @@ var applianceArray = [];
 
 
 
+//////////// FONCTION D'AFFICHAGE DES RECETTES SUR LA PAGE ////////////
 
 
-//////////// FONCTION D'AFFICHAGE DES RECETTES SUR LA PAGE
-
-
-//Récupération des éléments dans le fichier recipes.js
+// Récupération des éléments dans le fichier recipes.js
 
 function receiptsFactory (data) {
     const { name, image, ingredients, time, description, ustensils, appliance } = data
 
 
-    //Création des divs
+    // Création des divs necessaires à la création des cards
 
         const card = document.createElement('div')
         const img = document.createElement('div')
@@ -34,7 +32,7 @@ function receiptsFactory (data) {
         const desc = document.createElement('p')
 
 
-        //Association des classes
+        // Personnalisation des divs
 
         card.classList.add('result__card')
 
@@ -60,7 +58,7 @@ function receiptsFactory (data) {
         details.classList.add('result__card__text--details')
 
 
-        //Affichage et récupération des ingredients dans les tableaux
+        // Affichage et récupération des ingredients dans les tableaux
 
         ingredientsList.classList.add('result__card__text--details--ingredients')
         ingredients.forEach(element => {
@@ -123,70 +121,172 @@ recipes.forEach(element => {
 ////////// UTILISATION DES TABLEAUX DANS LES FILTRES
 
 
-//Création des tableaux sans doublons
+// Création des tableaux sans doublons
 
 var doublonIngredient = ingredientsArray.filter((x, i) => ingredientsArray.indexOf(x) === i);
 var doublonAppliance = applianceArray.filter((x, i) => applianceArray.indexOf(x) === i);
 var doublonUstensil = ustensilsArray.filter((x, i) => ustensilsArray.indexOf(x) === i);
 
+
+function tri(a,b) {
+    
+        if (a.nom < b.nom) return -1;
+        else if (a.nom == b.nom) return 0;
+        else return 1;
+    
+}
+    
+doublonIngredient = doublonIngredient.sort();
+doublonAppliance = doublonAppliance.sort();
+doublonUstensil = doublonUstensil.sort();
+
+
 // Itération des éléments des tableaux dans une liste
 
-const ingredientsDiv = document.querySelector('.filters__dropdown--listblue')
-const ingredientsDisplay = document.createElement('ul')
-const appliancesDiv = document.querySelector('.filters__dropdown--listgreen')
-const appliancesDisplay = document.createElement('ul')
-const ustensilsDiv = document.querySelector('.filters__dropdown--listred')
-const ustensilsDisplay = document.createElement('ul')
+    const ingredientsDiv = document.querySelector('.filters__dropdown--listblue')
+    const ingredientsDisplay = document.createElement('ul')
+    const appliancesDiv = document.querySelector('.filters__dropdown--listgreen')
+    const appliancesDisplay = document.createElement('ul')
+    const ustensilsDiv = document.querySelector('.filters__dropdown--listred')
+    const ustensilsDisplay = document.createElement('ul')
 
-doublonIngredient.forEach(element => {
-    const ingredientsLi = document.createElement('li')
-    ingredientsLi.classList.add('filters__dropdown--listblue--ingredients')
-    ingredientsLi.textContent = element
-    ingredientsDisplay.appendChild(ingredientsLi)
-})
+function recupFilters() {
 
-ingredientsDisplay.style.display = 'none'
-ingredientsDiv.appendChild(ingredientsDisplay)
+    ingredientsDisplay.innerHTML = ''
+    appliancesDisplay.innerHTML = ''
+    ustensilsDisplay.innerHTML = ''
 
 
-doublonAppliance.forEach(element => {
-    const appliancesLi = document.createElement('li')
-    appliancesLi.classList.add('filters__dropdown--listgreen--appliances')
-    appliancesLi.textContent = element
-    appliancesDisplay.appendChild(appliancesLi)
-})
+    doublonIngredient.forEach(element => { //pour chaque éléments 
+        const ingredientsLi = document.createElement('li') //je crée un élément li
+        ingredientsLi.classList.add('filters__dropdown--listblue--ingredients') //je lui assigne une classe
+        ingredientsLi.textContent = element //je lui donnes le contenu
+        ingredientsDisplay.appendChild(ingredientsLi) //je hierarchise
 
-appliancesDiv.style.display = 'none'
-appliancesDisplay.style.display = 'none'
-appliancesDiv.appendChild(appliancesDisplay)
+        ingredientsLi.addEventListener("click", function(event) {
+    
+            document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
+    
+            if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+            activeFilters.ingredients.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
+    
+            ingredientsFiltersDisplay()
+            appliancesFiltersDisplay()
+            ustensilsFiltersDisplay()
+    
+            research ();
+        })
+    })
+
+    ingredientsDisplay.style.display = 'none' // état initial
+    ingredientsDiv.appendChild(ingredientsDisplay)
 
 
-doublonUstensil.forEach(element => {
-    const ustensilsLi = document.createElement('li')
-    ustensilsLi.classList.add('filters__dropdown--listred--ustensils')
-    ustensilsLi.textContent = element
-    ustensilsDisplay.appendChild(ustensilsLi)
-})
+    doublonAppliance.forEach(element => {
+        const appliancesLi = document.createElement('li')
+        appliancesLi.classList.add('filters__dropdown--listgreen--appliances')
+        appliancesLi.textContent = element
+        appliancesDisplay.appendChild(appliancesLi)
 
-ustensilsDiv.style.display = 'none'
-ustensilsDisplay.style.display = 'none'
-ustensilsDiv.appendChild(ustensilsDisplay)
+        appliancesLi.addEventListener("click", function(event) {
+    
+            document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
+    
+            if (!activeFilters.appliances.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+            activeFilters.appliances.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
+    
+            ingredientsFiltersDisplay()
+            appliancesFiltersDisplay()
+            ustensilsFiltersDisplay()
+    
+            research ();
+        })
+    })
+
+    appliancesDiv.style.display = 'none'
+    appliancesDisplay.style.display = 'none'
+    appliancesDiv.appendChild(appliancesDisplay)
+
+
+    doublonUstensil.forEach(element => {
+        const ustensilsLi = document.createElement('li')
+        ustensilsLi.classList.add('filters__dropdown--listred--ustensils')
+        ustensilsLi.textContent = element
+        ustensilsDisplay.appendChild(ustensilsLi)
+
+        ustensilsLi.addEventListener("click", function(event) {
+    
+            document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
+    
+            if (!activeFilters.ustensils.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+            activeFilters.ustensils.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
+    
+            ingredientsFiltersDisplay()
+            appliancesFiltersDisplay()
+            ustensilsFiltersDisplay()
+    
+            research ();
+        })
+    })
+
+    ustensilsDiv.style.display = 'none'
+    ustensilsDisplay.style.display = 'none'
+    ustensilsDiv.appendChild(ustensilsDisplay)
+
+}
+
+recupFilters();
 
 
 
-//Eventlistener d'ouverture des dropdown filtres
+
+//////////// EVENTLISTENER D'OUVERTURE DES DROPDOWNS FILTRES ////////////
+
+
+// Déclaration des éléments du DOM
 
 const filterDropdownIngredients = document.querySelector('.ingredients')
 const dropdownTextBlue = document.querySelector('.filters__dropdown--text.blue')
 const dropdownArrowBlue = document.querySelector('.filters__dropdown--icon.blue')
-const dropdownSearch = document.querySelector('.filters__dropdown--search')
+const dropdownSearchIng = document.querySelector('.filters__dropdown--search.bluesearch')
 const filterDropdownAppliances = document.querySelector('.appliance')
 const dropdownTextGreen = document.querySelector('.filters__dropdown--text.green')
 const dropdownArrowGreen = document.querySelector('.filters__dropdown--icon.green')
+const dropdownSearchApp = document.querySelector('.filters__dropdown--search.greensearch')
 const filterDropdownUstensils = document.querySelector('.ustensils')
 const dropdownTextRed = document.querySelector('.filters__dropdown--text.red')
 const dropdownArrowRed = document.querySelector('.filters__dropdown--icon.red')
+const dropdownSearchUst = document.querySelector('.filters__dropdown--search.redsearch')
+//const ingredientsDisplay = document.querySelector('.')
 
+
+//création des fonctions de fermeture des dropdowns
+
+function closeIngDropdown() {
+    ingredientsDisplay.style.display = 'none'
+    dropdownTextBlue.style.display = 'block'
+    dropdownArrowBlue.classList.remove('filters__dropdown--icon--open')
+    dropdownSearchIng.style.display = 'none'
+}
+
+function closeAppDropdown() {
+    appliancesDiv.style.display = 'none'
+    appliancesDisplay.style.display = 'none'
+    dropdownTextGreen.style.display = 'block'
+    dropdownArrowGreen.classList.remove('filters__dropdown--icon--open')
+    dropdownSearchApp.style.display = 'none'
+}
+
+function closeUstDropdown() {
+    ustensilsDiv.style.display = 'none'
+    ustensilsDisplay.style.display = 'none'
+    dropdownTextRed.style.display = 'block'
+    dropdownArrowRed.classList.remove('filters__dropdown--icon--open')
+    dropdownSearchUst.style.display = 'none'
+}
+
+
+//addeventlistener des menus dropdown
 
 dropdownArrowBlue.addEventListener("click", function() {
 
@@ -194,13 +294,12 @@ dropdownArrowBlue.addEventListener("click", function() {
         ingredientsDisplay.style.display = 'block'
         dropdownTextBlue.style.display = 'none'
         dropdownArrowBlue.classList.add('filters__dropdown--icon--open')
-        dropdownSearch.style.display = 'block'
+        dropdownSearchIng.style.display = 'block'
+        closeAppDropdown(); // je viens fermer les autres dropdowns lorsque j'en ouvre une
+        closeUstDropdown();
     }
     else {
-        ingredientsDisplay.style.display = 'none'
-        dropdownTextBlue.style.display = 'block'
-        dropdownArrowBlue.classList.remove('filters__dropdown--icon--open')
-        dropdownSearch.style.display = 'none'
+        closeIngDropdown();
     }  
 })
 
@@ -211,12 +310,12 @@ dropdownArrowGreen.addEventListener("click", function() {
         appliancesDisplay.style.display = 'block'
         dropdownTextGreen.style.display = 'none'
         dropdownArrowGreen.classList.add('filters__dropdown--icon--open')
+        dropdownSearchApp.style.display = 'block'
+        closeIngDropdown();
+        closeUstDropdown();
     }
     else {
-        appliancesDiv.style.display = 'none'
-        appliancesDisplay.style.display = 'none'
-        dropdownTextGreen.style.display = 'block'
-        dropdownArrowGreen.classList.remove('filters__dropdown--icon--open')
+        closeAppDropdown();
     }  
 })
 
@@ -227,19 +326,23 @@ dropdownArrowRed.addEventListener("click", function() {
         ustensilsDisplay.style.display = 'block'
         dropdownTextRed.style.display = 'none'
         dropdownArrowRed.classList.add('filters__dropdown--icon--open')
+        dropdownSearchUst.style.display = 'block'
+        closeIngDropdown();
+        closeAppDropdown();
     }
     else {
-        ustensilsDiv.style.display = 'none'
-        ustensilsDisplay.style.display = 'none'
-        dropdownTextRed.style.display = 'block'
-        dropdownArrowRed.classList.remove('filters__dropdown--icon--open')
+        closeUstDropdown();
     }  
 })
 
 
-////////// SÉLECTION DES FILTRES
 
-// Création de l'objet filtres actifs
+
+
+////////// AFFICHAGE DES FILTRES ACTIFS ////////////
+
+
+// Création de l'objet filtres actifs composé de trois tableaux 
 
 var activeFilters = {
     ingredients : [],
@@ -247,7 +350,8 @@ var activeFilters = {
     appliances : [],
 }
 
-// Fonction affichage des filtres
+
+// Fonction affichage des filtres actifs pour les ingrédients
 
 function ingredientsFiltersDisplay() {
 
@@ -282,6 +386,9 @@ function ingredientsFiltersDisplay() {
     })
 }
 
+
+// Fonction affichage des filtres actifs pour les appareils
+
 function appliancesFiltersDisplay() {
 
     activeFilters.appliances.forEach(element => {
@@ -314,6 +421,9 @@ function appliancesFiltersDisplay() {
         })
     })
 }
+
+
+// Fonction affichage des filtres actifs pour les ustensils
 
 function ustensilsFiltersDisplay() {
 
@@ -349,7 +459,6 @@ function ustensilsFiltersDisplay() {
 }
 
 
-
 // Ajout des filtres dans les tableaux
 
 const ingredientsLi = document.querySelectorAll('.filters__dropdown--listblue--ingredients')
@@ -360,11 +469,10 @@ ingredientsLi.forEach(element => {
 
     element.addEventListener("click", function(event) {
 
-        // Réinitialisation des filtres au clic
-        document.querySelector('.filters__active').innerHTML = ''
+        document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
 
-        if (!activeFilters.ingredients.includes(event.target.textContent))
-        activeFilters.ingredients.push(event.target.textContent)
+        if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+        activeFilters.ingredients.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
 
         ingredientsFiltersDisplay()
         appliancesFiltersDisplay()
@@ -378,11 +486,10 @@ appliancesLi.forEach(element => {
 
     element.addEventListener("click", function(event) {
         
-        // Réinitialisation des filtres au clic
-        document.querySelector('.filters__active').innerHTML = ''
+        document.querySelector('.filters__active').innerHTML = ''// Réinitialisation des filtres au clic
 
-        if (!activeFilters.appliances.includes(event.target.textContent))
-        activeFilters.appliances.push(event.target.textContent);
+        if (!activeFilters.appliances.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+        activeFilters.appliances.push(event.target.textContent); // puis je l'ajoute au tableau des recettes 
 
         ingredientsFiltersDisplay()
         appliancesFiltersDisplay()
@@ -395,13 +502,12 @@ appliancesLi.forEach(element => {
 ustensilsLi.forEach(element => {
 
     element.addEventListener("click", function(event) {
-        console.log('wesh');
 
         // Réinitialisation des filtres au clic
         document.querySelector('.filters__active').innerHTML = ''
 
-        if (!activeFilters.ustensils.includes(event.target.textContent))
-        activeFilters.ustensils.push(event.target.textContent);
+        if (!activeFilters.ustensils.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+        activeFilters.ustensils.push(event.target.textContent); // puis je l'ajoute au tableau des recettes 
 
         ingredientsFiltersDisplay()
         appliancesFiltersDisplay()
@@ -413,44 +519,100 @@ ustensilsLi.forEach(element => {
 
 //Recherche des menus et réinitialisation des résultats
 
+let listUpdate = [] 
+let listClavier = []
+
+document.querySelector('.search__input').addEventListener('keyup',)
+
 function research() {
 
-    let listUpdate = [] 
+    listUpdate = []
+    listClavier = []
+
+
 
     recipes.forEach(recette => {
-        const ingRecette = recette.ingredients.map(a => a.ingredient)
+        const ingRecette = recette.ingredients.map(a => a.ingredient) // ??
 
-        if (activeFilters.ingredients.every(e => ingRecette.includes(e))) {
-            if (activeFilters.appliances.every(e => recette.appliance.includes(e))) {
-                if (activeFilters.ustensils.every(e => recette.ustensils.includes(e))) {
-                    listUpdate.push(recette)
+        if (activeFilters.ingredients.every(e => ingRecette.includes(e))) { // Si tous les ingrédients sélectionnés sont contenus dans la recette
+            if (activeFilters.appliances.every(e => recette.appliance.includes(e))) { // ET Si tous les appareils sélectionnés sont contenus dans la recette
+                if (activeFilters.ustensils.every(e => recette.ustensils.includes(e))) {  // ET Si tous les ustenciles sélectionnés sont contenus dans la recette
+                    listUpdate.push(recette) // Alors je push la recette dans la listUpdate
                 }
             }
         }
     })
 
-    if (document.querySelector('.filters__active').innerHTML == '' )
+    if (document.querySelector('.filters__active').innerHTML == '' ) // enlever la div si aucun filtre n'et sélectionné
     document.querySelector('.filters__active').style.display = 'none'
 
     document.querySelector('.result').innerHTML = ''
 
-    listUpdate.forEach(element => {
+    listUpdate.forEach(element => { // puis je viens afficher la nouvelle liste avec la fonction d'affichage des résultats
         receiptsFactory(element);
     })
+
+    let updateFilters = {
+        ingredients : [],
+        appliances : [],
+        ustensils : [],
+    }
+    
+    listUpdate.forEach(recette => {
+        recette.ingredients.forEach(ingredient => {
+            updateFilters.ingredients.push(ingredient.ingredient)
+        })
+        updateFilters.appliances.push(recette.appliance)
+        recette.ustensils.forEach(ustensil => {
+            updateFilters.ustensils.push(ustensil)
+        })
+    }) 
+    
+    doublonIngredient = updateFilters.ingredients.filter((x, i) => updateFilters.ingredients.indexOf(x) === i);
+    doublonAppliance = updateFilters.appliances.filter((x, i) => updateFilters.appliances.indexOf(x) === i);
+    doublonUstensil = updateFilters.ustensils.filter((x, i) => updateFilters.ustensils.indexOf(x) === i);
+
+    function tri(a,b) {
+    
+        if (a.nom < b.nom) return -1;
+        else if (a.nom == b.nom) return 0;
+        else return 1;
+    
+    }
+    
+    doublonIngredient = doublonIngredient.sort();
+    doublonAppliance = doublonAppliance.sort();
+    doublonUstensil = doublonUstensil.sort();
+
+    recupFilters();
+
+    console.log(ingredientsLi);
+
+    closeIngDropdown();
+    closeUstDropdown();
+    closeAppDropdown();
+
 }
 
-// Recherche au clavier dans une liste
+
+
+
+
+//////////// INPUTS DES MENUS DROPDOWN ////////////
+
+
+// Recherche au clavier INSTANTANÉE dans une liste
 
 document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
-document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
-document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
+document.querySelector('.greensearch').addEventListener('keyup', researchListGreen)
+document.querySelector('.redsearch').addEventListener('keyup', researchListRed)
 
 function researchListBlue(e) {
 
-    let filtersList = document.querySelectorAll('.filters__dropdown--listblue--ingredients')
+    let filtersListIng = document.querySelectorAll('.filters__dropdown--listblue--ingredients') 
     let rechercheIng = e.target.value
 
-    filtersList.forEach(tri => {
+    filtersListIng.forEach(tri => {
 
         if (tri.innerHTML.toLowerCase().includes(rechercheIng.toLowerCase()) || rechercheIng == '') {
             tri.style.display = 'block'
@@ -460,7 +622,40 @@ function researchListBlue(e) {
     })
 }
 
+function researchListGreen(e) {
 
-    // au click sur un tag, cacher les éléments qui ne son plus concernés
+    let filtersListApp = document.querySelectorAll('.filters__dropdown--listgreen--appliances')
+    let rechercheApp = e.target.value
 
-    //formater json + 3xrecherche + mettre de côté les ingredients des recettes affichées ('1 fois chaq) + input dans chaques dropdown
+    filtersListApp.forEach(tri => {
+
+        if (tri.innerHTML.toLowerCase().includes(rechercheApp.toLowerCase()) || rechercheApp == '') {
+            tri.style.display = 'block'
+        } else {
+            tri.style.display = 'none'
+        }
+    })
+}
+
+function researchListRed(e) {
+
+    let filtersListUst = document.querySelectorAll('.filters__dropdown--listred--ustensils')
+    let rechercheUst = e.target.value
+
+    filtersListUst.forEach(tri => {
+
+        if (tri.innerHTML.toLowerCase().includes(rechercheUst.toLowerCase()) || rechercheUst == '') {
+            tri.style.display = 'block'
+        } else {
+            tri.style.display = 'none'
+        }
+    })
+}
+
+
+   
+
+
+
+    // Regarder pour les décalages CSS
+    // formater Json pour l'ordre alphabetique

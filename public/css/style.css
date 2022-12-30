@@ -124,7 +124,6 @@ li {
 .filters__dropdown--content {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .filters__dropdown--close {
   width: 100%;
@@ -145,6 +144,9 @@ li {
   background-color: transparent;
   margin-bottom: 25px;
   display: none;
+}
+.filters__dropdown--search.greensearch {
+  width: 180px;
 }
 .filters__dropdown--search::placeholder {
   color: #fff;
