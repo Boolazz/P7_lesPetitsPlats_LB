@@ -520,37 +520,11 @@ ustensilsLi.forEach(element => {
 //Recherche des menus et réinitialisation des résultats
 
 let listUpdate = [] 
-let listClavier = []
+let listClavier = recipes
 
-document.querySelector('.search__input').addEventListener('keyup',)
+// création d'une fonction qui met à jour les filtres en fonction des résultats
 
-function research() {
-
-    listUpdate = []
-    listClavier = []
-
-
-
-    recipes.forEach(recette => {
-        const ingRecette = recette.ingredients.map(a => a.ingredient) // ??
-
-        if (activeFilters.ingredients.every(e => ingRecette.includes(e))) { // Si tous les ingrédients sélectionnés sont contenus dans la recette
-            if (activeFilters.appliances.every(e => recette.appliance.includes(e))) { // ET Si tous les appareils sélectionnés sont contenus dans la recette
-                if (activeFilters.ustensils.every(e => recette.ustensils.includes(e))) {  // ET Si tous les ustenciles sélectionnés sont contenus dans la recette
-                    listUpdate.push(recette) // Alors je push la recette dans la listUpdate
-                }
-            }
-        }
-    })
-
-    if (document.querySelector('.filters__active').innerHTML == '' ) // enlever la div si aucun filtre n'et sélectionné
-    document.querySelector('.filters__active').style.display = 'none'
-
-    document.querySelector('.result').innerHTML = ''
-
-    listUpdate.forEach(element => { // puis je viens afficher la nouvelle liste avec la fonction d'affichage des résultats
-        receiptsFactory(element);
-    })
+function resetTags(list) {
 
     let updateFilters = {
         ingredients : [],
@@ -558,7 +532,7 @@ function research() {
         ustensils : [],
     }
     
-    listUpdate.forEach(recette => {
+    list.forEach(recette => {
         recette.ingredients.forEach(ingredient => {
             updateFilters.ingredients.push(ingredient.ingredient)
         })
@@ -585,7 +559,87 @@ function research() {
     doublonUstensil = doublonUstensil.sort();
 
     recupFilters();
+}
 
+// Fonction de recherche dans l'input principal
+
+document.querySelector('.search__input').addEventListener('keyup', researchInput)
+
+function researchInput(e) {
+
+    listClavier = [] //on reinitialise
+    
+    let researchAll = e.target.value
+
+    if (researchAll.length >= 3) {
+
+        console.log(researchAll);
+
+        recipes.forEach(recipe => {
+    
+            const ingRecipe = recipe.ingredients.map(a => a.ingredient)
+            const titreRecipe = recipe.name
+            const descRecipe = recipe.description
+    
+            ingRecipe.forEach(ing => { // on met un boule car c'est un tableau
+                if (ing.toLowerCase().includes(researchAll.toLowerCase())) {
+                    listClavier.push(recipe)
+                }
+            }) 
+            if (titreRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
+                listClavier.push(recipe)
+            }
+            if (descRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
+                listClavier.push(recipe)
+            }
+        })
+    
+        listClavier = listClavier.filter((x, i) => listClavier.indexOf(x) === i);
+    
+        console.log(listClavier);
+
+    } else {
+        listClavier = recipes // si < 3 on remet recipes
+    }
+
+    document.querySelector('.result').innerHTML = ''
+
+    listClavier.forEach(r => { // on affiche les recette dans listeClavier
+        receiptsFactory(r);
+    })
+
+    resetTags(listClavier);
+    research();
+}
+
+//
+
+function research() {
+
+    listUpdate = []
+
+    listClavier.forEach(recette => {
+        const ingRecette = recette.ingredients.map(a => a.ingredient) // ??
+
+        if (activeFilters.ingredients.every(e => ingRecette.includes(e))) { // Si tous les ingrédients sélectionnés sont contenus dans la recette
+            if (activeFilters.appliances.every(e => recette.appliance.includes(e))) { // ET Si tous les appareils sélectionnés sont contenus dans la recette
+                if (activeFilters.ustensils.every(e => recette.ustensils.includes(e))) {  // ET Si tous les ustenciles sélectionnés sont contenus dans la recette
+                    listUpdate.push(recette) // Alors je push la recette dans la listUpdate
+                }
+            }
+        }
+    })
+
+    if (document.querySelector('.filters__active').innerHTML == '' ) // enlever la div si aucun filtre n'et sélectionné
+    document.querySelector('.filters__active').style.display = 'none'
+
+    document.querySelector('.result').innerHTML = ''
+
+    listUpdate.forEach(element => { // puis je viens afficher la nouvelle liste avec la fonction d'affichage des résultats
+        receiptsFactory(element);
+    })
+
+    resetTags(listUpdate);
     console.log(ingredientsLi);
 
     closeIngDropdown();
