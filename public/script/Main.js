@@ -123,9 +123,13 @@ recipes.forEach(element => {
 
 // Création des tableaux sans doublons
 
-var doublonIngredient = ingredientsArray.filter((x, i) => ingredientsArray.indexOf(x) === i);
-var doublonAppliance = applianceArray.filter((x, i) => applianceArray.indexOf(x) === i);
-var doublonUstensil = ustensilsArray.filter((x, i) => ustensilsArray.indexOf(x) === i);
+function doublonClear (list) {
+    return list.filter((x, i) => list.indexOf(x) === i);
+}
+
+var doublonIngredient = doublonClear(ingredientsArray)
+var doublonAppliance = doublonClear(applianceArray)
+var doublonUstensil = doublonClear(ustensilsArray)
 
 
 function tri(a,b) {
@@ -542,9 +546,9 @@ function resetTags(list) {
         })
     }) 
     
-    doublonIngredient = updateFilters.ingredients.filter((x, i) => updateFilters.ingredients.indexOf(x) === i);
-    doublonAppliance = updateFilters.appliances.filter((x, i) => updateFilters.appliances.indexOf(x) === i);
-    doublonUstensil = updateFilters.ustensils.filter((x, i) => updateFilters.ustensils.indexOf(x) === i);
+    doublonIngredient = doublonClear(updateFilters.ingredients)
+    doublonAppliance = doublonClear(updateFilters.appliances)
+    doublonUstensil = doublonClear(updateFilters.ustensils)
 
     function tri(a,b) {
     
@@ -573,30 +577,26 @@ function researchInput(e) {
 
     if (researchAll.length >= 3) {
 
-        console.log(researchAll);
-
-        recipes.forEach(recipe => {
+        for (let i = 0; i < listUpdate.length; i++) {
     
-            const ingRecipe = recipe.ingredients.map(a => a.ingredient)
-            const titreRecipe = recipe.name
-            const descRecipe = recipe.description
+            const ingRecipe = listUpdate[i].ingredients.map(a => a.ingredient)
+            const titreRecipe = listUpdate[i].name
+            const descRecipe = listUpdate[i].description
     
-            ingRecipe.forEach(ing => { // on met un boule car c'est un tableau
-                if (ing.toLowerCase().includes(researchAll.toLowerCase())) {
-                    listClavier.push(recipe)
+            for (let j = 0; j < ingRecipe.length; j++) { // on met une boucle car c'est un tableau
+                if (ingRecipe[j].toLowerCase().includes(researchAll.toLowerCase())) {
+                    listClavier.push(listUpdate[i])
                 }
-            }) 
+            } 
             if (titreRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
-                listClavier.push(recipe)
+                listClavier.push(listUpdate[i])
             }
             if (descRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
-                listClavier.push(recipe)
+                listClavier.push(listUpdate[i])
             }
-        })
+        }
     
-        listClavier = listClavier.filter((x, i) => listClavier.indexOf(x) === i);
-    
-        console.log(listClavier);
+        listClavier = doublonClear(listClavier)
 
     } else {
         listClavier = recipes // si < 3 on remet recipes
@@ -640,7 +640,6 @@ function research() {
     })
 
     resetTags(listUpdate);
-    console.log(ingredientsLi);
 
     closeIngDropdown();
     closeUstDropdown();
@@ -657,7 +656,7 @@ function research() {
 
 // Recherche au clavier INSTANTANÉE dans une liste
 
-document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)
+document.querySelector('.bluesearch').addEventListener('keyup', researchListBlue)   
 document.querySelector('.greensearch').addEventListener('keyup', researchListGreen)
 document.querySelector('.redsearch').addEventListener('keyup', researchListRed)
 
@@ -711,5 +710,4 @@ function researchListRed(e) {
 
 
 
-    // Regarder pour les décalages CSS
-    // formater Json pour l'ordre alphabetique
+ 
