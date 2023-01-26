@@ -472,8 +472,8 @@ ingredientsLi.forEach(element => {
 
         document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
 
-        if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
-        activeFilters.ingredients.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
+        if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques filtre qui contient l'élément sélectionné
+        activeFilters.ingredients.push(event.target.textContent) // puis je l'ajoute au tableau des filtres actifs
 
         ingredientsFiltersDisplay()
         appliancesFiltersDisplay()
