@@ -577,7 +577,7 @@ function researchInput(e) {
 
     if (researchAll.length >= 3) {
 
-        for (let i = 0; i < listUpdate.length; i++) {
+        for (let i = 0; i < listUpdate.length; i++) { // pour les element (du premier au dernier) du tableau
     
             const ingRecipe = listUpdate[i].ingredients.map(a => a.ingredient)
             const titreRecipe = listUpdate[i].name
