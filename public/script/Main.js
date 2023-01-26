@@ -127,6 +127,7 @@ var doublonIngredient = ingredientsArray.filter((x, i) => ingredientsArray.index
 var doublonAppliance = applianceArray.filter((x, i) => applianceArray.indexOf(x) === i);
 var doublonUstensil = ustensilsArray.filter((x, i) => ustensilsArray.indexOf(x) === i);
 
+// tri par ordre alphabetique
 
 function tri(a,b) {
     
@@ -167,14 +168,14 @@ function recupFilters() {
     
             document.querySelector('.filters__active').innerHTML = '' // Réinitialisation des filtres au clic
     
-            if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné
+            if (!activeFilters.ingredients.includes(event.target.textContent)) // J'ajoute chaques recette qui contient l'élément sélectionné (activefilters = tableaux créé plus bas)
             activeFilters.ingredients.push(event.target.textContent) // puis je l'ajoute au tableau des recettes 
     
             ingredientsFiltersDisplay()
             appliancesFiltersDisplay()
             ustensilsFiltersDisplay()
     
-            research ();
+            research (); // Fonction permettant de mettre à jour les cartes en fonction des filtres sélectionnés
         })
     })
 
@@ -459,7 +460,7 @@ function ustensilsFiltersDisplay() {
 }
 
 
-// Ajout des filtres dans les tableaux
+// Ajout des filtres dans les tableaux de filtres actifs
 
 const ingredientsLi = document.querySelectorAll('.filters__dropdown--listblue--ingredients')
 const ustensilsLi = document.querySelectorAll('.filters__dropdown--listred--ustensils')
@@ -517,7 +518,7 @@ ustensilsLi.forEach(element => {
     })
 })
 
-//Recherche des menus et réinitialisation des résultats
+//RRéinitialisation des listes de filtres affichés
 
 let listUpdate = [] 
 let listClavier = recipes
@@ -532,9 +533,9 @@ function resetTags(list) {
         ustensils : [],
     }
     
-    list.forEach(recette => {
+    list.forEach(recette => { // pour chaque recette affichée
         recette.ingredients.forEach(ingredient => {
-            updateFilters.ingredients.push(ingredient.ingredient)
+            updateFilters.ingredients.push(ingredient.ingredient) // récupération de chaque ingrédients et je l'ajoute au tableau mis à jour
         })
         updateFilters.appliances.push(recette.appliance)
         recette.ustensils.forEach(ustensil => {
@@ -569,27 +570,27 @@ function researchInput(e) {
 
     listClavier = [] //on reinitialise
     
-    let researchAll = e.target.value
+    let researchAll = e.target.value // input
 
     if (researchAll.length >= 3) {
 
         console.log(researchAll);
 
-        recipes.forEach(recipe => {
+        recipes.forEach(recipe => { // pour chaque recette
     
             const ingRecipe = recipe.ingredients.map(a => a.ingredient)
             const titreRecipe = recipe.name
             const descRecipe = recipe.description
     
-            ingRecipe.forEach(ing => { // on met un boule car c'est un tableau
+            ingRecipe.forEach(ing => { // on verifie si l'input est contenu dans chaque ingredients
                 if (ing.toLowerCase().includes(researchAll.toLowerCase())) {
                     listClavier.push(recipe)
                 }
             }) 
-            if (titreRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
+            if (titreRecipe.toLowerCase().includes(researchAll.toLowerCase())) { // input contenu dans le titre
                 listClavier.push(recipe)
             }
-            if (descRecipe.toLowerCase().includes(researchAll.toLowerCase())) {
+            if (descRecipe.toLowerCase().includes(researchAll.toLowerCase())) { //input contenu dans la description
                 listClavier.push(recipe)
             }
         })
@@ -612,14 +613,14 @@ function researchInput(e) {
     research();
 }
 
-//
+// mise à jour de l'affichage des recettes en fonction des filtres
 
 function research() {
 
     listUpdate = []
 
     listClavier.forEach(recette => {
-        const ingRecette = recette.ingredients.map(a => a.ingredient) // ??
+        const ingRecette = recette.ingredients.map(a => a.ingredient) 
 
         if (activeFilters.ingredients.every(e => ingRecette.includes(e))) { // Si tous les ingrédients sélectionnés sont contenus dans la recette
             if (activeFilters.appliances.every(e => recette.appliance.includes(e))) { // ET Si tous les appareils sélectionnés sont contenus dans la recette
@@ -664,11 +665,11 @@ document.querySelector('.redsearch').addEventListener('keyup', researchListRed)
 function researchListBlue(e) {
 
     let filtersListIng = document.querySelectorAll('.filters__dropdown--listblue--ingredients') 
-    let rechercheIng = e.target.value
+    let rechercheIng = e.target.value // input
 
-    filtersListIng.forEach(tri => {
+    filtersListIng.forEach(tri => { // pour chaque element
 
-        if (tri.innerHTML.toLowerCase().includes(rechercheIng.toLowerCase()) || rechercheIng == '') {
+        if (tri.innerHTML.toLowerCase().includes(rechercheIng.toLowerCase()) || rechercheIng == '') { // je verifie si l'input est contenu dans l'element
             tri.style.display = 'block'
         } else {
             tri.style.display = 'none'
