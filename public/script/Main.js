@@ -635,10 +635,13 @@ function research() {
 
     document.querySelector('.result').innerHTML = ''
 
-    listUpdate.forEach(element => { // puis je viens afficher la nouvelle liste avec la fonction d'affichage des résultats
-        receiptsFactory(element);
-    })
-
+    if (listUpdate.length == 0) {
+        document.querySelector('.result').innerHTML = '<div class="error"> Aucun resultat à afficher </div>'
+    } else {
+        listUpdate.forEach(element => { // puis je viens afficher la nouvelle liste avec la fonction d'affichage des résultats
+            receiptsFactory(element);
+        })
+    }
     resetTags(listUpdate);
 
     closeIngDropdown();
