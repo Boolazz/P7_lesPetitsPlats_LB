@@ -279,4 +279,17 @@ li {
   overflow: hidden;
 }
 
+@media screen and (max-width: 1023px) {
+  .result {
+      grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .result {
+      grid-template-columns: 1fr;
+  }
+}
+
+
 /*# sourceMappingURL=style.css.map */
