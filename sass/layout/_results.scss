@@ -74,3 +74,24 @@
         
     }
 }
+
+.error {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    font-weight: 700;
+    color: rgb(187, 35, 35);
+}
+
+@media screen and (max-width: 1023px) {
+    .result {
+        grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .result {
+        grid-template-columns: 1fr;
+    }
+  }
+  
